@@ -1,0 +1,56 @@
+/*.contact-list{
+  display: block;
+  height: 20px;
+  border: 1px;
+}*/
+body{
+ 
+  background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
+  background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
+  background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
+        
+}
+
+.notif-mantap{
+  padding: 20px;
+  display: none;
+}
+.title{
+  color: white;
+  box-shadow: 5px;
+}
+.contact-list{
+  overflow: auto;
+  height: 400px;
+}
+
+.chat-window{
+  /*display: block;*/
+  overflow: auto;
+  height: 410px;
+  max-width: 100%;
+}
+::-webkit-scrollbar {
+    width: 6px!important;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .2);
+}
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .08);
+}
+.awak{
+  margin-top: 40px;
+}
+
+.kontener{
+  height: 500px;
+}
+
+.welcome{
+  height: 500px;
+  background-size: 100% 500px;
+  color: #fff;
+}

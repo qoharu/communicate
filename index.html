@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html ng-app="Communicate">
+	<head>
+		<title>Communicate</title>
+		<link rel="stylesheet" href="assets/css/bootstrap.css">
+		<link rel="stylesheet" href="assets/css/normalize.css">
+		<link rel="stylesheet" href="assets/css/style.css">
+		<script type="text/javascript" src="assets/js/SIPml-api.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="assets/js/app.js"></script>
+		<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/bootbox.min.js"></script>
+		<script type="text/javascript" src="assets/js/angular.min.js"></script>
+		<script type="text/javascript" src="assets/js/angular-route.min.js"></script>
+		<script type="text/javascript" src="assets/js/aplikasi.js"></script>
+		<!-- Controllers -->
+		<script type="text/javascript" src="modules/authentication/controllers.js"></script>
+		<script type="text/javascript" src="modules/home/controllers.js"></script>
+	</head>
+	<a href="https://github.com/squhart/communicate"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    <body>
+    <div class="bg-primary">
+    <p>Call Status: <code id="callstatus"></code> Register Status: <code id="registerstatus"></code></p>
+    </div>
+        <div class="container awak">
+            <div class="row col-12">
+            <div class="col-xs-3 col-xs-offset-4">
+                <div class="modal-content notif-mantap">
+                    <h2 class="modal-title"><label id="caller"></label> is Calling you</h2>
+                    <button type="button" class="btn btn-success" onclick="sipCall('call-audiovideo');">Answer</button>
+                    <button type="button" class="btn btn-danger" onclick="sipHangUp();">Close</button>
+                </div>
+            </div>
+				<div class="row col-xs-12 ">
+					<h2 class="title">Communicate</h2>
+				</div>
+				<div class="row col-xs-12 kontener" ng-view>
+					
+				</div>
+			</div>
+		</div>
+    </body>
+
+<div style="display:none;">
+    
+<body style="cursor:wait;">
+
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span4 well">
+                <label style="width: 100%;" align="center" id="txtRegStatus">
+                </label>
+                <h2>
+                    Registration</h2>
+                <br />
+                <table style='width: 100%'>
+                    <tr>
+                        <td>
+                            <label style="height: 100%">
+                                Display Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" style="width: 100%; height: 100%" id="txtDisplayName" value=""
+                                placeholder="e.g. John Doe" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label style="height: 100%">
+                                Private Identity<sup>*</sup>:</label>
+                        </td>
+                        <td>
+                            <input type="text" style="width: 100%; height: 100%" id="txtPrivateIdentity" value=""
+                                placeholder="e.g. +33600000000" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label style="height: 100%">
+                                Public Identity<sup>*</sup>:</label>
+                        </td>
+                        <td>
+                            <input type="text" style="width: 100%; height: 100%" id="txtPublicIdentity" value=""
+                                placeholder="e.g. sip:+33600000000@doubango.org" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label style="height: 100%">Password:</label>
+                        </td>
+                        <td>
+                            <input type="password" style="width: 100%; height: 100%" id="txtPassword" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label style="height: 100%">Realm<sup>*</sup>:</label>
+                        </td>
+                        <td>
+                            <input type="text" style="width: 100%; height: 100%" id="txtRealm" value="" placeholder="e.g. doubango.org" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right">
+                            <input type="button" class="btn btn-success" id="btnRegister" value="LogIn" disabled onclick='sipRegister();' />
+                            &nbsp;
+                            <input type="button" class="btn btn-danger" id="btnUnRegister" value="LogOut" disabled onclick='sipUnRegister();' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p class="small"><sup>*</sup> <i>Mandatory Field</i></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <a class="btn" href="http://code.google.com/p/sipml5/wiki/Public_SIP_Servers" target="_blank">Need SIP account?</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <a class="btn" href="./expert.htm" target="_blank">Expert mode?</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="divCallCtrl" class="span7 well" style='display:table-cell; vertical-align:middle'>
+                <label style="width: 100%;" align="center" id="txtCallStatus">
+                </label>
+                <h2>
+                    Call control
+                </h2>
+                <br />
+                <table style='width: 100%;'>
+                    <tr>
+                        <td style="white-space:nowrap;">
+                            <input type="text" style="width: 100%; height:100%;" id="txtPhoneNumber" value="" placeholder="Enter phone number to call" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" align="right">
+                            <div class="btn-toolbar" style="margin: 0; vertical-align:middle">
+                                <div id="divBtnCallGroup" class="btn-group">
+                                    <button id="btnCall" disabled class="btn btn-primary" data-toggle="dropdown">Call</button>
+                                </div>&nbsp;&nbsp;
+                                <div class="btn-group">
+                                    <input type="button" id="btnHangUp" style="margin: 0; vertical-align:middle; height: 100%;" class="btn btn-primary" value="HangUp" onclick='sipHangUp();' disabled />
+                                </div>
+                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="tdVideo" class='tab-video'>
+                            <div id="divVideo" class='div-video'>
+                                <div id="divVideoRemote" style='position:relative; border:1px solid #009; height:100%; width:100%; z-index: auto; opacity: 0'>
+                                    
+                                </div>
+
+                                <div id="divVideoLocalWrapper" style="margin-left: 0px; border:0px solid #009; z-index: 1000">
+                                    <iframe class="previewvideo" style="border:0px solid #009; z-index: 1000"> </iframe>
+                                    <div id="divVideoLocal" class="previewvideo" style=' border:0px solid #009; z-index: 1000'>
+                                        
+                                    </div>
+                                </div>
+                                <div id="divScreencastLocalWrapper" style="margin-left: 90px; border:0px solid #009; z-index: 1000">
+                                    <iframe class="previewvideo" style="border:0px solid #009; z-index: 1000"> </iframe>
+                                    <div id="divScreencastLocal" class="previewvideo" style=' border:0px solid #009; z-index: 1000'>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td align='center'>
+                            <div id='divCallOptions' class='call-options' style='opacity: 0; margin-top: 0px'>
+                                <input type="button" class="btn" style="" id="btnFullScreen" value="FullScreen" disabled onclick='toggleFullScreen();' /> &nbsp;
+                                <input type="button" class="btn" style="" id="btnMute" value="Mute" onclick='sipToggleMute();' /> &nbsp;
+                                <input type="button" class="btn" style="" id="btnHoldResume" value="Hold" onclick='sipToggleHoldResume();' /> &nbsp;
+                                <input type="button" class="btn" style="" id="btnTransfer" value="Transfer" onclick='sipTransfer();' /> &nbsp;
+                                <input type="button" class="btn" style="" id="btnKeyPad" value="KeyPad" onclick='openKeyPad();' />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    <!-- /container -->
+
+    <!-- Glass Panel -->
+    <div id='divGlassPanel' class='glass-panel' style='visibility:hidden'></div>
+    <!-- KeyPad Div -->
+    <div id='divKeyPad' class='span2 well div-keypad' style="left:0px; top:0px; width:250; height:240; visibility:hidden">
+        <table style="width: 100%; height: 100%">
+            <tr><td><input type="button" style="width: 33%" class="btn" value="1" onclick="sipSendDTMF('1');"/><input type="button" style="width: 33%" class="btn" value="2" onclick="sipSendDTMF('2');"/><input type="button" style="width: 33%" class="btn" value="3" onclick="sipSendDTMF('3');"/></td></tr>
+            <tr><td><input type="button" style="width: 33%" class="btn" value="4" onclick="sipSendDTMF('4');"/><input type="button" style="width: 33%" class="btn" value="5" onclick="sipSendDTMF('5');"/><input type="button" style="width: 33%" class="btn" value="6" onclick="sipSendDTMF('6');"/></td></tr>
+            <tr><td><input type="button" style="width: 33%" class="btn" value="7" onclick="sipSendDTMF('7');"/><input type="button" style="width: 33%" class="btn" value="8" onclick="sipSendDTMF('8');"/><input type="button" style="width: 33%" class="btn" value="9" onclick="sipSendDTMF('9');"/></td></tr>
+            <tr><td><input type="button" style="width: 33%" class="btn" value="*" onclick="sipSendDTMF('*');"/><input type="button" style="width: 33%" class="btn" value="0" onclick="sipSendDTMF('0');"/><input type="button" style="width: 33%" class="btn" value="#" onclick="sipSendDTMF('#');"/></td></tr>
+            <tr><td colspan=3><input type="button" style="width: 100%" class="btn btn-medium btn-danger" value="close" onclick="closeKeyPad();" /></td></tr>
+        </table>
+    </div>
+    <!-- Call button options -->
+    <ul id="ulCallOptions" class="dropdown-menu" style="visibility:hidden">
+        <li><a href="#" onclick='sipCall("call-audio");'>Audio</a></li>
+        <li><a href="#" onclick='sipCall("call-audiovideo");'>Video</a></li>
+        <li id='liScreenShare' ><a href="#" onclick='sipShareScreen();'>Screen Share</a></li>
+        <li class="divider"></li>
+        <li><a href="#" onclick='uiDisableCallOptions();'><b>Disable these options</b></a></li>
+    </ul>
+
+
+    <!-- Audios -->
+
+    <audio id="audio_remote" autoplay="autoplay" />
+    <audio id="ringtone" loop src="assets/sounds/ringtone.wav" />
+    <audio id="ringbacktone" loop src="assets/sounds/ringbacktone.wav" />
+    <audio id="dtmfTone" src="assets/sounds/dtmf.wav" />
+
+
+    </body>
+</div>
+</html>
+
+<div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        In call with<h4 class="modal-title" id="caller"></h4>
+      </div>
+      <div class="modal-body">
+        <video class="video" width="200px" height="200px" id="video_local" autoplay="autoplay" muted="true" style="opacity: 0;background-color: #000000; -webkit-transition-property: opacity; -webkit-transition-duration: 2s;">
+                                        </video>
+        <video class="video" width="100%" height="100%" id="video_remote" autoplay controls style="opacity: 0; -webkit-transition-property: opacity; -webkit-transition-duration: 2s;"></video>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="sipHangUp();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

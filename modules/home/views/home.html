@@ -1,0 +1,77 @@
+<div class="col-lg-4">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<img src="assets/img/dummy/dummy.png" width="40px" class="img-circle">
+			{{fullname}}
+			<div class="tombol-kiri pull-right">
+				<button class="btn btn-default" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-plus"></span></button>
+				<button class="btn btn-default btn-danger" ng-click="logout()"><span class="glyphicon glyphicon-download"></span> Logout</button>
+			</div>
+		</div>
+		<div  class="collapse" id="collapseExample">
+			<form class="input-group" ng-submit="addContact()">
+				<input ng-model="sipContact" type="text" class="form-control input-sm" placeholder="Add" />
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-success btn-sm" id="btn-chat">
+					<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</span>
+			</form>
+		</div>
+		<div class="panel-body">
+
+			<div class="input-group">
+				<input id="filter" ng-model="searchString" type="text" class="form-control input-sm chat_input" placeholder="Search" />
+				<span class="input-group-btn">
+					<button class="btn btn-primary btn-sm" id="btn-chat">
+					<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</div>
+		<div class="list-group contact-list panel-body ">
+			<a href ng-click='chat(i.contact_sip)' class="list-group-item" ng-repeat="i in friendlist | searchFor:searchString">
+				<img src="assets/img/dummy/dummy.png" width="40px" class="img-circle">
+				<strong>{{i.contact_sip}}</strong>
+				<!-- <strong class="label label-success pull-right chat-label" ng-show="i.unread != 0" >{{i.unread}}</strong> -->
+			</a>
+		</div>
+	</div>
+</div>
+<div class="row col-lg-8 ">
+	<div class="panel panel-default">
+		
+		<div class="panel-heading">
+			<div class="detail-chat" ng-show="chatopened === 1">
+				<img src="assets/img/dummy/dummy.png" width="39px" class="img-circle">
+				{{chatdetail}}
+				<div class="tombol-kanan pull-right">
+					<button class="btn btn-success btn-md" onclick="sipCall('call-audiovideo');"><span class="glyphicon glyphicon-facetime-video"></span> Video Call</button>
+					<button class="btn btn-success btn-md" onclick="sipCall('call-audio');"><span class="glyphicon glyphicon-earphone"></span> Voice Call</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body chat-window" id="divnya">
+			<div class="jumbotron" ng-show="chatopened === 0" >
+				<h1>No chat window opened</h1>
+				<p>Select a contact to start a chat</p>
+			</div>
+			<div class="chat-bubble" ng-repeat="pesan in apalah" >
+				<span class="well well-sm message msg-sender blockquote" ng-show="chatdetail==='{{pesan.from}}' || chatdetail==='{{pesan.to}}'" ng-class="{true: 'pull-left', false: 'pull-right'}[pesan.left]" >
+					<p>{{pesan.message}}</p>
+				</span>
+				<div class="col-xs-12"></div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<form ng-submit="sendMessage()">
+			<div class="input-group">
+				<input id="btn-input" type="text" class="form-control input-sm chat_input" ng-model="newMessage" placeholder="Write your message here..." />
+				<span class="input-group-btn">
+					<button class="btn btn-primary btn-sm" id="btn-chat" >Send</button>
+				</span>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
